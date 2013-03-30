@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Rt+C",
+  "name": "Retweet with comment - Rt+C",
   "description": "This extension allows make a retweet with a comment in Twitter page",
-  "version": "1.2",
+  "version": "1.4",
   "background": {
     "persistent": false,
     "page": "rtc.html"
