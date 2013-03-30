@@ -7,6 +7,8 @@ var ExternFunction = (function() {
 
 	//action when rtc li element is clicked
 	var clickRtc = function (e) {
+		//avoid to execute "a" default action
+		e.preventDefault();
 		var target = e.target;
 		//tweet element
 		var parent = $(target).parent().parent().parent().parent().parent();
