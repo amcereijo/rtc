@@ -16,16 +16,8 @@ var ExternFunction = (function() {
 		var tweetText = $(parent).find('.js-tweet-text').text();
 		//twitter user
 		var twitterUser = ' RT @' + $(parent).find('span.username').find('b').text()+ ' ';
-
-		//remove click function when click open "new tweet" element
-		$('#global-new-tweet-button').unbind('click');
-
 		//click to open new tweet modal
 		$('#global-new-tweet-button').click();
-
-		//add click function when click open "new tweet" element
-		$('#global-new-tweet-button').click(clickNewTweet);
-
 		//save previus title
 		previusTitle = $('#global-tweet-dialog').find('.modal-title').text();
 		//change modal title
@@ -36,7 +28,8 @@ var ExternFunction = (function() {
 		$('#global-tweet-dialog').find('.rtcTitle').removeClass('modal-title');
 		//center new title
 		$('.rtcTitle').css('text-align','center');
-		
+		//add click function whe click open new tweet element
+		$('#global-new-tweet-button').click(clickNewTweet);
 		//add retweet text
 		$('#tweet-box-global').find('div').text(twitterUser+tweetText);
 	};
@@ -52,8 +45,8 @@ var ExternFunction = (function() {
 		//set original title
 		$('#global-tweet-dialog').find('.modal-title').text(previusTitle);
 		//remove retweet text
-		//$('#tweet-box-global').find('div').text('');
-		$('#tweet-box-global').find('div').empty();
+		$('#tweet-box-global').find('div').text('');
+		//$('#tweet-box-global').find('div').empty();
 	};
 
 	//function for page tree modification
@@ -65,18 +58,16 @@ var ExternFunction = (function() {
 
 	//function to add li rtc elements and its actions
 	var addOption = function () {
-		if($('ul.tweet-actions:not(.rtc)').length>0){
-			//remove tree listener while we modify the page content
-			$('.stream-container').unbind("DOMSubtreeModified");
-			//finde elements with no rtc li option
-			$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement);
-			//add click Rt+C 
-			$('li.rtc').click(clickRtc);
-			//add class to ul for mark as option rtc added
-			$('ul.tweet-actions:not(.rtc)').addClass('rtc');
-			//add tree listener to know when we have to add more rtc li elements
-			$('.stream-container').bind("DOMSubtreeModified",treeModifi);
-		}
+		//remove tree listener while we modify the page content
+		$('.stream-container').unbind("DOMSubtreeModified");
+		//finde elements with no rtc li option
+		$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement);
+		//add click Rt+C 
+		$('li.rtc').click(clickRtc);
+		//add class to ul for mark as option rtc added
+		$('ul.tweet-actions:not(.rtc)').addClass('rtc');
+		//add tree listener to know when we have to add more rtc li elements
+		$('.stream-container').bind("DOMSubtreeModified",treeModifi);
 	};
 
 	//public methods
