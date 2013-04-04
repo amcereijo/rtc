@@ -1,7 +1,12 @@
 // functionality of the plugin
 var ExternFunction = (function() {
+	var liTitle = chrome.i18n.getMessage("liTitle");
+	var liText = chrome.i18n.getMessage("liText");
+	var titleText = chrome.i18n.getMessage("extName");
+	var retweetText = chrome.i18n.getMessage("retweetText");
+
 	//rtc li element
-	var rtcLiElement = '<li class="action-reply-container rtc"><a class="with-icn" data-modal="tweet-reply" href="#" title="Rt+C"><i class="sm-reply"></i><b>Rt+C</b></a></li>';
+	var rtcLiElement = '<li class="action-reply-container rtc"><a class="with-icn" data-modal="tweet-reply" href="#" title="'+liTitle+'"><i class="sm-rt"></i><b>'+liText+'</b></a></li>';
 	//to save the new tweet original title
 	var previusTitle;
 
@@ -15,13 +20,13 @@ var ExternFunction = (function() {
 		//tweet text
 		var tweetText = $(parent).find('.js-tweet-text').text();
 		//twitter user
-		var twitterUser = ' RT @' + $(parent).find('span.username').find('b').text()+ ' ';
+		var twitterUser = retweetText + $(parent).find('span.username').find('b').text()+ ' ';
 		//click to open new tweet modal
 		$('#global-new-tweet-button').click();
 		//save previus title
 		previusTitle = $('#global-tweet-dialog').find('.modal-title').text();
 		//change modal title
-		$('#global-tweet-dialog').find('.modal-title').text('Rt+C');
+		$('#global-tweet-dialog').find('.modal-title').text(titleText);
 		//add class to title elemento to find it later
 		$('#global-tweet-dialog').find('.modal-title').addClass('rtcTitle');
 		//remove orginal title class
