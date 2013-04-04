@@ -64,7 +64,7 @@ var ExternFunction = (function() {
 	//function to add li rtc elements and its actions
 	var addOption = function () {
 		//remove tree listener while we modify the page content
-		$('.stream-container').unbind("DOMSubtreeModified");
+		$('#page-outer').unbind("DOMSubtreeModified");
 		//finde elements with no rtc li option
 		$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement);
 		//add click Rt+C 
@@ -72,7 +72,7 @@ var ExternFunction = (function() {
 		//add class to ul for mark as option rtc added
 		$('ul.tweet-actions:not(.rtc)').addClass('rtc');
 		//add tree listener to know when we have to add more rtc li elements
-		$('.stream-container').bind("DOMSubtreeModified",treeModifi);
+		$('#page-outer').bind("DOMSubtreeModified",treeModifi);
 	};
 
 	//public methods
