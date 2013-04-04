@@ -1,0 +1,26 @@
+{
+	"extName":{
+		"message": "Retweet with comment - Rt+C",
+  		"description": "Extension name"
+	},
+	"extDescription":{
+		"message": "This extension allows make a retweet with a comment in Twitter web page",
+  		"description": "Extension description"
+	},
+	"liTitle":{
+		"message": "Retweet with comment",
+  		"description": "Rt+C li text"
+	},
+	"liText":{
+		"message": "Rt+C",
+  		"description": "Rt+C text"
+	},
+	"retweetText":{
+		"message": " RT @",
+  		"description": "Rt+C retweet text"
+	},
+	"pageMessage":{
+		"message": "Rt+C Plugin running...",
+  		"description": "Page message"
+	}
+}
