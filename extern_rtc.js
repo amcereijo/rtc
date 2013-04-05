@@ -16,7 +16,7 @@ var ExternFunction = (function() {
 		e.preventDefault();
 		var target = e.target;
 		//tweet element
-		var parent = $(target).parent().parent().parent().parent().parent();
+		var parent = $(target).closest('.content');//$(target).parent().parent().parent().parent().parent();
 		//tweet text
 		var tweetText = $(parent).find('.js-tweet-text').text();
 		//twitter user
@@ -68,10 +68,7 @@ var ExternFunction = (function() {
 		//finde elements with no rtc li option
 		$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement);
 		//add click Rt+C 
-		
 		$('#page-outer').on('click', 'li.rtc', clickRtc);
-		//$('li.rtc').on("click",clickRtc);
-
 		//add class to ul for mark as option rtc added
 		$('ul.tweet-actions:not(.rtc)').addClass('rtc');
 		//add tree listener to know when we have to add more rtc li elements
