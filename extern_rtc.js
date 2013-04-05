@@ -16,7 +16,7 @@ var ExternFunction = (function() {
 		e.preventDefault();
 		var target = e.target;
 		//tweet element
-		var parent = $(target).closest('.content');//$(target).parent().parent().parent().parent().parent();
+		var parent = $(target).closest('.content');
 		//tweet text
 		var tweetText = $(parent).find('.js-tweet-text').text();
 		//twitter user
