@@ -34,7 +34,7 @@ var ExternFunction = (function() {
 		//center new title
 		$('.rtcTitle').css('text-align','center');
 		//add click function whe click open new tweet element
-		$('#global-new-tweet-button').click(clickNewTweet);
+		$('#global-new-tweet-button').on("click",clickNewTweet);
 		//add retweet text
 		$('#tweet-box-global').find('div').text(twitterUser+tweetText);
 	};
@@ -68,7 +68,10 @@ var ExternFunction = (function() {
 		//finde elements with no rtc li option
 		$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement);
 		//add click Rt+C 
-		$('li.rtc').click(clickRtc);
+		
+		$('#page-outer').on('click', 'li.rtc', clickRtc);
+		//$('li.rtc').on("click",clickRtc);
+
 		//add class to ul for mark as option rtc added
 		$('ul.tweet-actions:not(.rtc)').addClass('rtc');
 		//add tree listener to know when we have to add more rtc li elements
@@ -76,7 +79,7 @@ var ExternFunction = (function() {
 	};
 
 	//public methods
-	var public = {
+	return {
 		initPlugin : function () {
 			//avoid profile page
 			if($('.profile.active').length===0){
@@ -84,7 +87,6 @@ var ExternFunction = (function() {
 			}
 		}
 	}
-	return public;
 })();
 
 //execute when load
