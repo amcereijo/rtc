@@ -41,7 +41,6 @@ var ExternFunction = (function() {
 
 	//function to set original title, class and empty content
 	clickNewTweet = function () {
-		alert('click new tweet:'+previusTitle+'text:'+$('#tweet-box-global').text());
 		if(previusTitle !== ''){ 
 			//remove center title, add original title class, remove temporal "rtc" title class and set original title
 			$(tweetDialogTitle).css('text-align','')
