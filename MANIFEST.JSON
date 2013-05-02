@@ -3,7 +3,7 @@
 
   "name": "__MSG_extName__",
   "description": "__MSG_extDescription__",
-  "version": "1.8",
+  "version": "2.0",
   "default_locale": "en",
   "background": {
     "persistent": false,
@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": ["*://twitter.com/*"],
-      "js": ["jquery-1.9.1.min.js","extern_rtc.js"],
+      "js": ["jquery-1.9.1.min.js","insQ.js","extern_rtc.js"],
       "run_at": "document_end"
     }
   ],
