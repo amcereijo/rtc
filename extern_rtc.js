@@ -13,6 +13,7 @@ var ExternFunction = (function() {
 		tweetDialogTitle,
 		tweetDialogContent,
 		elementToObserv,
+		allElementLoaded = false,
 
 	//action when rtc li element is clicked
 	clickRtc = function (e) {
@@ -40,7 +41,8 @@ var ExternFunction = (function() {
 
 	//function to set original title, class and empty content
 	clickNewTweet = function () {
-		if(previusTitle !== ''){
+		alert('click new tweet:'+previusTitle+'text:'+$('#tweet-box-global').text());
+		if(previusTitle !== ''){ 
 			//remove center title, add original title class, remove temporal "rtc" title class and set original title
 			$(tweetDialogTitle).css('text-align','')
 				.addClass('modal-title')
@@ -52,27 +54,25 @@ var ExternFunction = (function() {
 		}
 	},
 
-	//function for page tree modification
-	treeModifi = function () {
-		addOption();
-	},
 
 	//function to add li rtc elements and its actions
-	addOption = function () {
+	addOptionsAndClickEvents = function () { 
 		if($('ul.tweet-actions:not(.rtc)').length !== 0){
-			//remove tree listener while we modify the page content
-			$(elementToObserv).unbind("DOMSubtreeModified");
 			//find elements with no rtc li option
 			$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement)
-			//add click Rt+C 
-		    $(elementToObserv).on('click', 'li.rtc', clickRtc);
 			//add class to ul for mark as option rtc added
 			$('ul.tweet-actions:not(.rtc)').addClass('rtc');
-			//add tree listener to know when we have to add more rtc li elements
-			$(elementToObserv).bind("DOMSubtreeModified",treeModifi);
+		}
+
+		if(!allElementLoaded){
+			//add click Rt+C 
+    		$(elementToObserv).on('click', 'li.rtc', clickRtc);
+			//add click function whe click open new tweet element
+			$(tweetButton).click(clickNewTweet);
 		}
 	},
 
+	//load shared elements
 	loadElements = function () {
 		//rtc li element
 		rtcLiElement = '<li class="action-reply-container rtc"><a class="with-icn" data-modal="tweet-reply" href="#" title="'+liTitle+'"><i class="sm-rt"></i><b>'+liText+'</b></a></li>';
@@ -89,9 +89,12 @@ var ExternFunction = (function() {
 			//avoid profile page
 			if($('.profile.active').length === 0){
 				loadElements();
-				//add click function whe click open new tweet element
-				$(tweetButton).click(clickNewTweet);
-				addOption();
+				//add listener to add new tweet elements       
+				insertionQ('li.js-stream-item').every(function(element){
+	    			addOptionsAndClickEvents();
+				});
+				addOptionsAndClickEvents();
+				allElementLoaded = true;
 			}
 		}
 	}

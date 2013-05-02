@@ -4,8 +4,9 @@ rtc
 Chrome plugin to allow retweet with comment in twitter web page
 
 
-Chrome plugin page: https://developer.chrome.com/extensions/
-Page where plugin applies: https://twitter.com/
+* Chrome plugin page: https://developer.chrome.com/extensions/
+* Page where plugin applies: https://twitter.com/
+* Library to listen for add new elements in DOM elements: https://github.com/naugtur/insertionQuery
 
 How it works:
  1 - Add listener to https://twitter.com with "chrome.webNavigation.onCompleted.addListener" to start to run the plugin
