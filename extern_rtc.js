@@ -35,8 +35,21 @@ var ExternFunction = (function() {
 			.addClass('rtcTitle')
 			.removeClass('modal-title')
 			.css('text-align','center');
-		//add retweet text
-		$(tweetDialogContent).find('div').text(twitterUser+tweetText);
+
+	
+		chrome.storage.local.get('auto_message_active', function(data) {
+	      if (data.auto_message_active) {
+	      	chrome.storage.local.get('auto_text', function(data) {
+		      var autoMessage = (data.auto_text)?data.auto_text:'';
+		      //add retweet text
+		      $(tweetDialogContent).find('div').text(autoMessage+twitterUser+tweetText);
+		    });
+	      }else{
+	      	//add retweet text
+	      	$(tweetDialogContent).find('div').text(twitterUser+tweetText);
+	      }
+	    });
+		
 	},
 
 	//function to set original title, class and empty content

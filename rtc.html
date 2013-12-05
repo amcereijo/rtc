@@ -5,20 +5,13 @@
     <style>
       body {
         min-width: 160px;
-        overflow-x: hidden;
-        background-color: #2a4678;
-      }
-
-      img {
-        margin: 5px;
-        border: 2px solid black;
-        vertical-align: middle;
-        width: 75px;
-        height: 75px;
+        overflow-x: auto;
+        background-color: white;
+        height:auto;
       }
       .message_div{
-        
-        color: #ffffff;
+        color: black;
+        overflow:auto;
       }
     </style>
 
@@ -28,10 +21,15 @@
       -
       - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
      -->
-     <script src="jquery-1.9.1.min.js"></script>
-    <script src="rtc.js"></script>
+     
   </head>
   <body>
-    <div class="message_div"></div>
+    <div class="message_div" id="form_div">
+      <span id="automessage"></span>&nbsp;<input type="checkbox" id="autoTextCheck"/><br/>
+      <input type="text" placeholder="" id="text" disabled="disabled"/><br/>
+      <input type="button" id="save" value=""/>
+    </div>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="rtc.js"></script>
   </body>
 </html>

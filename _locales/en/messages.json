@@ -22,5 +22,21 @@
 	"pageMessage":{
 		"message": "Rt+C Plugin running...",
   		"description": "Page message"
+	},
+	"buttonSave":{
+		"message": "Save",
+		"description": "Save autotext value"
+	},
+	"textPlaceholder":{
+		"message": "text for retweets",
+		"description": "Auto text for a retweet"
+	},
+	"automessage":{
+		"message": "Automessage:",
+		"description": "Automessage to retweets"
+	},
+	"pluginTitle":{
+		"message": "Add an automessage to your retweets",
+		"description": "Add an automessage to your retweets"
 	}
 }
