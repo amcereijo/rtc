@@ -3,7 +3,7 @@
 
   "name": "__MSG_extName__",
   "description": "__MSG_extDescription__",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "default_locale": "en",
   "background": {
     "persistent": false,
@@ -24,6 +24,7 @@
     "alarms",
     "tabs",
     "webNavigation",
-    "*://*.twitter.com/"
+    "*://*.twitter.com/",
+    "storage"
    ]
 }
