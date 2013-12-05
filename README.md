@@ -1,7 +1,8 @@
 rtc
 ===
 
-Chrome plugin to allow retweet with comment in twitter web page
+Chrome plugin to allow retweet with comment in twitter web page.
+In addition you can configure a text and it will be added to a retweet automatically. The text will be saved. You can activate and desactivate this option wihtout lost the saved text.
 
 
 * Chrome plugin page: https://developer.chrome.com/extensions/
@@ -19,6 +20,7 @@ How it works:
 
  5 - Modify "new tweet" modal view:
 	  - Add tweet content to "retweet with comment" in text editor of "new tweet" modal view
+	  - If you have activated auto message, it will be added to the content.
 	  - Change title
 
  6 - Restore "new tweet" modal view adding a click function over new tweet button:
