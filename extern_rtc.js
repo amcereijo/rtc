@@ -14,6 +14,7 @@ var ExternFunction = (function() {
 		tweetDialogContent,
 		elementToObserv,
 		allElementLoaded = false,
+		closeModalNewTweetElement,
 
 	//action when rtc li element is clicked
 	clickRtc = function (e) {
@@ -35,7 +36,6 @@ var ExternFunction = (function() {
 			.addClass('rtcTitle')
 			.removeClass('modal-title')
 			.css('text-align','center');
-
 	
 		chrome.storage.local.get('auto_message_active', function(data) {
 	      if (data.auto_message_active) {
@@ -49,11 +49,10 @@ var ExternFunction = (function() {
 	      	$(tweetDialogContent).find('div').text(twitterUser+tweetText);
 	      }
 	    });
-		
 	},
 
 	//function to set original title, class and empty content
-	clickNewTweet = function () {
+	clickNewTweet = function (e) {
 		if(previusTitle !== ''){ 
 			//remove center title, add original title class, remove temporal "rtc" title class and set original title
 			$(tweetDialogTitle).css('text-align','')
@@ -61,38 +60,36 @@ var ExternFunction = (function() {
 				.removeClass('rtcTitle')
 				.text(previusTitle);
 			//remove retweet text
-			$(tweetDialogContent).find('div').empty();
+			$(tweetDialogContent).find('div').empty().html('<br/>');
 			previusTitle = '';
+			$(tweetDialogContent).focus();
 		}
 	},
 
-
 	//function to add li rtc elements and its actions
 	addOptionsAndClickEvents = function () { 
-		if($('ul.tweet-actions:not(.rtc)').length !== 0){
+		if($('ul.tweet-actions-sidebar:not(.rtc)').length !== 0){
 			//find elements with no rtc li option
-			$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement)
+			$('ul.tweet-actions-sidebar:not(.rtc)').prepend(rtcLiElement)
 			//add class to ul for mark as option rtc added
-			$('ul.tweet-actions:not(.rtc)').addClass('rtc');
+			$('ul.tweet-actions-sidebar:not(.rtc)').addClass('rtc');
 		}
-
 		if(!allElementLoaded){
 			//add click Rt+C 
-    		$(elementToObserv).on('click', 'li.rtc', clickRtc);
-			//add click function whe click open new tweet element
-			$(tweetButton).click(clickNewTweet);
+    		$(elementToObserv).on('click', 'li.rtc', clickRtc);	
 		}
 	},
 
 	//load shared elements
 	loadElements = function () {
 		//rtc li element
-		rtcLiElement = '<li class="action-reply-container rtc"><a class="with-icn" data-modal="tweet-reply" href="#" title="'+liTitle+'"><i class="sm-rt"></i><b>'+liText+'</b></a></li>';
+		rtcLiElement = '<li class="action-reply-container rtc"><a href="#" role="button" class="js-tooltip" data-modal="tweet-reply" data-delay="0" data-original-title="'+liTitle+'"><span class="tweet-action-count" aria-hidden="true"><span>'+liText+'</span></span><span class="Icon Icon--reply"></span><span class="u-isHiddenVisually">'+liText+'</span></a></li>';
 		tweetButton = $('#global-new-tweet-button');
 		tweetDialog = $('#global-tweet-dialog');
 		tweetDialogTitle = $(tweetDialog).find('.modal-title');
 		tweetDialogContent = $('#tweet-box-global');
 		elementToObserv = $('#page-outer');
+		closeModalNewTweetElement = $('.modal-close.js-close');
 	};
 
 	//public methods
@@ -107,6 +104,8 @@ var ExternFunction = (function() {
 				});
 				addOptionsAndClickEvents();
 				allElementLoaded = true;
+				//add listener to new tweet close button 
+				closeModalNewTweetElement.on('click', clickNewTweet);
 			}
 		}
 	}
