@@ -15,6 +15,7 @@ var ExternFunction = (function() {
 		elementToObserv,
 		allElementLoaded = false,
 		closeModalNewTweetElement,
+		filterPromoted = false,
 
 	//action when rtc li element is clicked
 	clickRtc = function (e) {
@@ -69,6 +70,17 @@ var ExternFunction = (function() {
 	//function to add li rtc elements and its actions
 	addOptionsAndClickEvents = function () { 
 		var elements = $('ul.js-actions:not(.rtc)');
+		chrome.storage.local.get('filter_promoted', function(data) {
+			if(data.filter_promoted){
+				console.log('promoted: ' + data.filter_promoted);
+				elements = jQuery.grep(elements, function(el) {
+					var jqEl = $(el);
+					return !jqEl.hasClass('js-action-profile-promoted') && 
+						!jqEl.hasClass('js-promoted-badge');
+				});
+				elements = $(elements);
+			}
+		});		
 		if(elements.length !== 0){
 			//add class to ul for mark as option rtc added and add rtc opction
 			elements.addClass('rtc').prepend(rtcLiElement);

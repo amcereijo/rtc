@@ -38,5 +38,9 @@
 	"pluginTitle":{
 		"message": "Add an automessage to your retweets",
 		"description": "Add an automessage to your retweets"
+	},
+	"filterPromotedText":{
+		"message": "Filter promoted",
+		"description": "Filter promoted tweets"	
 	}
 }
