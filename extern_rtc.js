@@ -25,15 +25,15 @@ var ExternFunction = (function() {
 			//tweet element
 			parent = $(target).closest('.content'),
 			//tweet text
-			tweetText = $(parent).find('.js-tweet-text').text(),
+			tweetText = parent.find('.js-tweet-text').text(),
 			//twitter user
-			twitterUser = retweetText + $(parent).find('span.username').find('b').text()+ ' ';
+			twitterUser = retweetText + parent.find('span.username').find('b').text()+ ' ';
 		//click to open new tweet modal
-		$(tweetButton).click();
+		tweetButton.click();
 		//save previus title
-		previusTitle = $(tweetDialogTitle).text();
+		previusTitle = tweetDialogTitle.text();
 		//change modal title,add class to title elemento to find it later and remove orginal title class and center new title
-		$(tweetDialogTitle).text(titleText)
+		tweetDialogTitle.text(titleText)
 			.addClass('rtcTitle')
 			.removeClass('modal-title')
 			.css('text-align','center');
@@ -43,11 +43,11 @@ var ExternFunction = (function() {
 	      	chrome.storage.local.get('auto_text', function(data) {
 		      var autoMessage = (data.auto_text)?data.auto_text:'';
 		      //add retweet text
-		      $(tweetDialogContent).find('div').text(autoMessage+twitterUser+tweetText);
+		      tweetDialogContent.find('div').text(autoMessage+twitterUser+tweetText);
 		    });
 	      }else{
 	      	//add retweet text
-	      	$(tweetDialogContent).find('div').text(twitterUser+tweetText);
+	      	tweetDialogContent.find('div').text(twitterUser+tweetText);
 	      }
 	    });
 	},
@@ -61,18 +61,17 @@ var ExternFunction = (function() {
 				.removeClass('rtcTitle')
 				.text(previusTitle);
 			//remove retweet text
-			$(tweetDialogContent).find('div').empty().html('<br/>');
+			tweetDialogContent.find('div').empty().html('<br/>');
 			previusTitle = '';
-			$(tweetDialogContent).focus();
+			tweetDialogContent.focus();
 		}
 	},
 
 	//function to add li rtc elements and its actions
 	addOptionsAndClickEvents = function () { 
-		var elements = $('ul.js-actions:not(.rtc)');
+		var elements = $('.js-actions:not(.rtc)');
 		chrome.storage.local.get('filter_promoted', function(data) {
-			if(data.filter_promoted){
-				console.log('promoted: ' + data.filter_promoted);
+			if(data.filter_promoted) {
 				elements = jQuery.grep(elements, function(el) {
 					var jqEl = $(el);
 					return !jqEl.hasClass('js-action-profile-promoted') && 
@@ -81,23 +80,24 @@ var ExternFunction = (function() {
 				elements = $(elements);
 			}
 		});		
-		if(elements.length !== 0){
+		if(elements.length !== 0) {
 			//add class to ul for mark as option rtc added and add rtc opction
 			elements.addClass('rtc').prepend(rtcLiElement);
 		}
-		if(!allElementLoaded){
+		if(!allElementLoaded) {
 			//add click Rt+C 
-    		$(elementToObserv).on('click', 'li.rtc', clickRtc);	
+    		elementToObserv.on('click', 'div.rtc', clickRtc);	
 		}
 	},
 
 	//load shared elements
 	loadElements = function () {
 		//rtc li element
-		rtcLiElement = '<li class="action-reply-container rtc"><a role="button" class="with-icn js-tooltip" data-modal="tweet-reply" href="#" data-original-title="'+liTitle+'"><span class="Icon Icon--reply"></span><b>'+liText+'</b></a></li>';
+		//rtcLiElement = '<li class="action-reply-container rtc"><a role="button" class="with-icn js-tooltip" data-modal="tweet-reply" href="#" data-original-title="'+liTitle+'"><span class="Icon Icon--reply"></span><b>'+liText+'</b></a></li>';
+		rtcLiElement = '<div class="ProfileTweet-action ProfileTweet-action--reply rtc"><button class="ProfileTweet-actionButton u-textUserColorHover js-actionButton js-actionReply js-tooltip" data-modal="ProfileTweet-reply" type="button" data-original-title="'+liTitle+'"><span class="Icon Icon--reply username">'+liText+'</span><span class="ProfileTweet-actionCount u-textUserColorHover ProfileTweet-actionCount--isZero"><span class="ProfileTweet-actionCountForPresentation" aria-hidden="true"></span></span></button></div>';
 		tweetButton = $('#global-new-tweet-button');
 		tweetDialog = $('#global-tweet-dialog');
-		tweetDialogTitle = $(tweetDialog).find('.modal-title');
+		tweetDialogTitle = tweetDialog.find('.modal-title');
 		tweetDialogContent = $('#tweet-box-global');
 		elementToObserv = $('#page-outer');
 		closeModalNewTweetElement = $('.modal-close.js-close');
