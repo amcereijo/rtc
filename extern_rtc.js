@@ -37,7 +37,7 @@ var ExternFunction = (function() {
 			.addClass('rtcTitle')
 			.removeClass('modal-title')
 			.css('text-align','center');
-	
+
 		chrome.storage.local.get('auto_message_active', function(data) {
 	      if (data.auto_message_active) {
 	      	chrome.storage.local.get('auto_text', function(data) {
@@ -54,7 +54,7 @@ var ExternFunction = (function() {
 
 	//function to set original title, class and empty content
 	clickNewTweet = function (e) {
-		if(previusTitle !== ''){ 
+		if(previusTitle !== ''){
 			//remove center title, add original title class, remove temporal "rtc" title class and set original title
 			$(tweetDialogTitle).css('text-align','')
 				.addClass('modal-title')
@@ -68,25 +68,25 @@ var ExternFunction = (function() {
 	},
 
 	//function to add li rtc elements and its actions
-	addOptionsAndClickEvents = function () { 
+	addOptionsAndClickEvents = function () {
 		var elements = $('.js-actions:not(.rtc)');
 		chrome.storage.local.get('filter_promoted', function(data) {
 			if(data.filter_promoted) {
 				elements = jQuery.grep(elements, function(el) {
 					var jqEl = $(el);
-					return !jqEl.hasClass('js-action-profile-promoted') && 
+					return !jqEl.hasClass('js-action-profile-promoted') &&
 						!jqEl.hasClass('js-promoted-badge');
 				});
 				elements = $(elements);
 			}
-		});		
+		});
 		if(elements.length !== 0) {
 			//add class to ul for mark as option rtc added and add rtc opction
 			elements.addClass('rtc').prepend(rtcLiElement);
 		}
 		if(!allElementLoaded) {
-			//add click Rt+C 
-    		elementToObserv.on('click', 'div.rtc', clickRtc);	
+			//add click Rt+C
+    		elementToObserv.on('click', 'div.js-rtc', clickRtc);
 		}
 	},
 
@@ -94,7 +94,7 @@ var ExternFunction = (function() {
 	loadElements = function () {
 		//rtc li element
 		//rtcLiElement = '<li class="action-reply-container rtc"><a role="button" class="with-icn js-tooltip" data-modal="tweet-reply" href="#" data-original-title="'+liTitle+'"><span class="Icon Icon--reply"></span><b>'+liText+'</b></a></li>';
-		rtcLiElement = '<div class="ProfileTweet-action ProfileTweet-action--reply rtc"><button class="ProfileTweet-actionButton u-textUserColorHover js-actionButton js-actionReply js-tooltip" data-modal="ProfileTweet-reply" type="button" data-original-title="'+liTitle+'"><span class="Icon Icon--reply username">'+liText+'</span><span class="ProfileTweet-actionCount u-textUserColorHover ProfileTweet-actionCount--isZero"><span class="ProfileTweet-actionCountForPresentation" aria-hidden="true"></span></span></button></div>';
+		rtcLiElement = '<div class="ProfileTweet-action ProfileTweet-action--reply js-rtc"><button class="ProfileTweet-actionButton u-textUserColorHover js-actionButton js-actionReply js-tooltip" data-modal="ProfileTweet-reply" type="button" data-original-title="'+liTitle+'"><span class="Icon Icon--reply username">'+liText+'</span><span class="ProfileTweet-actionCount u-textUserColorHover ProfileTweet-actionCount--isZero"><span class="ProfileTweet-actionCountForPresentation" aria-hidden="true"></span></span></button></div>';
 		tweetButton = $('#global-new-tweet-button');
 		tweetDialog = $('#global-tweet-dialog');
 		tweetDialogTitle = tweetDialog.find('.modal-title');
@@ -109,13 +109,13 @@ var ExternFunction = (function() {
 			//avoid profile page
 			if($('.profile.active').length === 0){
 				loadElements();
-				//add listener to add new tweet elements       
+				//add listener to add new tweet elements
 				insertionQ('li.js-stream-item').every(function(element){
 	    			addOptionsAndClickEvents();
 				});
 				addOptionsAndClickEvents();
 				allElementLoaded = true;
-				//add listener to new tweet close button 
+				//add listener to new tweet close button
 				closeModalNewTweetElement.on('click', clickNewTweet);
 			}
 		}
