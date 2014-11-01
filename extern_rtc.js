@@ -54,7 +54,7 @@ var ExternFunction = (function() {
 
 	//function to set original title, class and empty content
 	clickNewTweet = function (e) {
-		if(previusTitle !== ''){
+		if(previusTitle !== '') {
 			//remove center title, add original title class, remove temporal "rtc" title class and set original title
 			$(tweetDialogTitle).css('text-align','')
 				.addClass('modal-title')
@@ -68,26 +68,30 @@ var ExternFunction = (function() {
 	},
 
 	//function to add li rtc elements and its actions
-	addOptionsAndClickEvents = function () {
-		var elements = $('.js-actions:not(.rtc)');
-		chrome.storage.local.get('filter_promoted', function(data) {
-			if(data.filter_promoted) {
-				elements = jQuery.grep(elements, function(el) {
-					var jqEl = $(el);
-					return !jqEl.hasClass('js-action-profile-promoted') &&
-						!jqEl.hasClass('js-promoted-badge');
-				});
-				elements = $(elements);
-			}
-		});
-		if(elements.length !== 0) {
+	addOptionsAndClickEvents = function (elements) {
+		var actionsFooter = elements.find('.js-actions:not(.rtc)');
+		
+		if(actionsFooter.length !== 0) {
 			//add class to ul for mark as option rtc added and add rtc opction
-			elements.addClass('rtc').prepend(rtcLiElement);
+			actionsFooter.addClass('rtc').prepend(rtcLiElement);
 		}
 		if(!allElementLoaded) {
 			//add click Rt+C
     		elementToObserv.on('click', 'div.js-rtc', clickRtc);
 		}
+	},
+
+	filterPromoted = function (tweets) {
+		chrome.storage.local.get('filter_promoted', function(data) {
+			var promoted;
+			if(data.filter_promoted) {
+				promoted = tweets.find('.js-action-profile-promoted').closest('.js-stream-item');
+				promoted.remove();
+				promoted = tweets.find('.js-promoted-badge').closest('.js-stream-item');;
+				promoted.remove();
+			}
+		});
+		
 	},
 
 	//load shared elements
@@ -106,14 +110,23 @@ var ExternFunction = (function() {
 	//public methods
 	return {
 		initPlugin : function () {
+			var parent, tweets;
 			//avoid profile page
-			if($('.profile.active').length === 0){
+			if($('.profile.active').length === 0) {
 				loadElements();
 				//add listener to add new tweet elements
-				insertionQ('li.js-stream-item').every(function(element){
-	    			addOptionsAndClickEvents();
+				insertionQ('li.js-stream-item').summary(function(tweets) {
+					var jqtweets = $(tweets);
+	    			addOptionsAndClickEvents(jqtweets);
+	    			filterPromoted(jqtweets);	
+
 				});
-				addOptionsAndClickEvents();
+				
+				parent = $('.content-main');
+				addOptionsAndClickEvents(parent);
+				tweets = parent.find('.js-stream-item');
+				filterPromoted(tweets);
+				
 				allElementLoaded = true;
 				//add listener to new tweet close button
 				closeModalNewTweetElement.on('click', clickNewTweet);
