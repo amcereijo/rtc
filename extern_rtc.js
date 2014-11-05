@@ -72,12 +72,20 @@ var ExternFunction = (function() {
 		var actionsFooter = elements.find('.js-actions:not(.rtc)');
 		
 		if(actionsFooter.length !== 0) {
-			//add class to ul for mark as option rtc added and add rtc opction
+			//create rt+c element
+			if(!rtcLiElement) {
+				rtcLiElement = actionsFooter.find('.ProfileTweet-action--reply').eq(0).clone()
+					.addClass('js-rtc')
+				rtcLiElement.find('.Icon--reply').addClass('username').text(liText);
+				rtcLiElement.find('.js-tooltip').attr('title', liTitle);	
+			}
+
+			//add rt+c element
 			actionsFooter.addClass('rtc').prepend(rtcLiElement);
 		}
 		if(!allElementLoaded) {
 			//add click Rt+C
-    		elementToObserv.on('click', 'div.js-rtc', clickRtc);
+    		elementToObserv.on('click', '.js-rtc', clickRtc);
 		}
 	},
 
@@ -96,9 +104,6 @@ var ExternFunction = (function() {
 
 	//load shared elements
 	loadElements = function () {
-		//rtc li element
-		//rtcLiElement = '<li class="action-reply-container rtc"><a role="button" class="with-icn js-tooltip" data-modal="tweet-reply" href="#" data-original-title="'+liTitle+'"><span class="Icon Icon--reply"></span><b>'+liText+'</b></a></li>';
-		rtcLiElement = '<div class="ProfileTweet-action ProfileTweet-action--reply js-rtc"><button class="ProfileTweet-actionButton u-textUserColorHover js-actionButton js-actionReply js-tooltip" data-modal="ProfileTweet-reply" type="button" data-original-title="'+liTitle+'"><span class="Icon Icon--reply username">'+liText+'</span><span class="ProfileTweet-actionCount u-textUserColorHover ProfileTweet-actionCount--isZero"><span class="ProfileTweet-actionCountForPresentation" aria-hidden="true"></span></span></button></div>';
 		tweetButton = $('#global-new-tweet-button');
 		tweetDialog = $('#global-tweet-dialog');
 		tweetDialogTitle = tweetDialog.find('.modal-title');
